@@ -24,11 +24,16 @@
   <img id="cam" src="" />
 
   <script>
-    const img = document.getElementById("cam");
+let i = 0;
 
-    setInterval(() => {
-      img.src = "https://odjyyixxiflyjqxgdnor.supabase.co/storage/v1/object/public/images/image.jpg?t=" + new Date().getTime();
-    }, 200);
+setInterval(() => {
+  document.getElementById("cam").src =
+    `https://odjyyixxiflyjqxgdnor.supabase.co/storage/v1/object/public/images/img_${i}.jpg?t=` + Date.now();
+
+  i++;
+  if (i >= 100) i = 0;
+
+}, 100);
   </script>
 
 </body>
