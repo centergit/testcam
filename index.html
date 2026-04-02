@@ -14,34 +14,44 @@
       border-radius: 10px;
       width: 400px;
     }
+    #status {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 8px;
+    }
   </style>
 </head>
 <body>
-
   <h1>📡 Smart Helmet Camera</h1>
   <p>Live Snapshot</p>
-
   <img id="cam" src="" />
+  <p id="status">Menunggu gambar...</p>
 
   <script>
-const img = document.getElementById("cam");
-let i = 0;
+    const img    = document.getElementById("cam");
+    const status = document.getElementById("status");
+    const BASE   = "https://odjyyixxiflyjqxgdnor.supabase.co/storage/v1/object/public/images/live.jpg";
 
-setInterval(() => {
-  const url = `https://odjyyixxiflyjqxgdnor.supabase.co/storage/v1/object/public/images/img_${i}.jpg?t=${Date.now()}`;
+    // Preload ke elemen sementara dulu
+    // baru tampilkan kalau sudah ready → tidak flicker
+    function fetchFrame() {
+      const url  = BASE + "?t=" + Date.now();
+      const temp = new Image();
 
-  const temp = new Image();
-  temp.onload = () => {
-    img.src = url; // hanya update kalau gambar ada
-  };
+      temp.onload = () => {
+        img.src = url;
+        status.textContent = "🟢 Live | " + new Date().toLocaleTimeString();
+      };
 
-  temp.src = url;
+      temp.onerror = () => {
+        status.textContent = "🔴 Gambar tidak ditemukan | " + new Date().toLocaleTimeString();
+      };
 
-  i++;
-  if (i >= 100) i = 0;
+      temp.src = url;
+    }
 
-}, 500);
+    fetchFrame(); // langsung load pertama kali
+    setInterval(fetchFrame, 500); // refresh tiap 500ms
   </script>
-
 </body>
 </html>
