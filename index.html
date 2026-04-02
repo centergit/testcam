@@ -24,16 +24,23 @@
   <img id="cam" src="" />
 
   <script>
+const img = document.getElementById("cam");
 let i = 0;
 
 setInterval(() => {
-  document.getElementById("cam").src =
-    `https://odjyyixxiflyjqxgdnor.supabase.co/storage/v1/object/public/images/img_${i}.jpg?t=` + Date.now();
+  const url = `https://odjyyixxiflyjqxgdnor.supabase.co/storage/v1/object/public/images/img_${i}.jpg?t=${Date.now()}`;
+
+  const temp = new Image();
+  temp.onload = () => {
+    img.src = url; // hanya update kalau gambar ada
+  };
+
+  temp.src = url;
 
   i++;
   if (i >= 100) i = 0;
 
-}, 100);
+}, 500);
   </script>
 
 </body>
