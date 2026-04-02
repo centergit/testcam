@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Smart Helmet Camera</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: #0f172a;
+      color: white;
+    }
+    img {
+      margin-top: 20px;
+      border-radius: 10px;
+      width: 400px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📡 Smart Helmet Camera</h1>
+  <p>Live Snapshot</p>
+
+  <img id="cam" src="" />
+
+  <script>
+    const img = document.getElementById("cam");
+
+    setInterval(() => {
+      img.src = "https://odjyyixxiflyjqxgdnor.supabase.co/storage/v1/object/public/images/image.jpg?t=" + new Date().getTime();
+    }, 1000);
+  </script>
+
+</body>
+</html>
